@@ -13,7 +13,6 @@ public class EnemyBehavior : MonoBehaviour
     private Vector3 worldPortalOffset; // Multiplied by rotation
     private SpriteRenderer renderer;
     private static Sprite spriteDefault;
-    private static Sprite spriteFrozen;
     private static Sprite spriteStunned;
     private static Sprite spriteAfraid;
     private Vector3 run;
@@ -25,7 +24,7 @@ public class EnemyBehavior : MonoBehaviour
     public float maxScare = 30f;
 
 
-    enum stateType {Stunned, Afraid, Frozen, Default}
+    enum stateType {Stunned, Afraid, Default}
     private stateType state;
 
     private static GlobalBehavior globalBehavior;
@@ -55,7 +54,6 @@ public class EnemyBehavior : MonoBehaviour
         if (null != renderer)
         {
             spriteDefault = Resources.Load("Textures/enemyDefault", typeof(Sprite)) as Sprite;
-            spriteFrozen = Resources.Load("Textures/enemyFrozen", typeof(Sprite)) as Sprite;
             spriteStunned = Resources.Load("Textures/enemyStunned", typeof(Sprite)) as Sprite;
             spriteAfraid = Resources.Load("Textures/enemyAfraid", typeof(Sprite)) as Sprite;
         }
@@ -71,32 +69,12 @@ public class EnemyBehavior : MonoBehaviour
 
         if (state == stateType.Default)
         {
-            if(globalBehavior.frozen)
-            {
-                state = stateType.Frozen;
-                renderer.sprite = spriteFrozen;
-            }
             if (heroDiff.magnitude < maxScare && heroDot > 0)
             {
                 state = stateType.Afraid;
                 renderer.sprite = spriteAfraid;
             }
             transform.position += (mSpeed * Time.smoothDeltaTime) * transform.up;
-        }
-        else if(state == stateType.Frozen)
-        {
-            if (!globalBehavior.frozen)
-            {
-                state = stateType.Default;
-                renderer.sprite = spriteDefault;
-            }
-
-            if (heroDiff.magnitude < maxScare && heroDot > 0)
-            {
-                state = stateType.Afraid;
-                renderer.sprite = spriteAfraid;
-            }
-
         }
         else if(state == stateType.Stunned)
         {

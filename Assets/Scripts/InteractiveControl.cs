@@ -1,7 +1,8 @@
 using UnityEngine;	
 using System.Collections;
 
-public class InteractiveControl : MonoBehaviour {
+public class InteractiveControl : MonoBehaviour 
+{
 
 	public GameObject mProjectile = null;
     public AudioSource mAudioEffect = null;
@@ -11,8 +12,8 @@ public class InteractiveControl : MonoBehaviour {
     private static GlobalBehavior globalBehavior;
 
 	#region user control references
-	private float kHeroSpeed = 20f;
-	private float kHeroRotateSpeed = 90/2f; // 90-degrees in 2 seconds
+	private float kHeroSpeed = 50f;
+	private float kHeroRotateSpeed = 180f; // 90-degrees in 2 seconds
 	#endregion
 	// Use this for initialization
 	void Start () 

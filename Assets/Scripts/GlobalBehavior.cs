@@ -23,7 +23,7 @@ public class GlobalBehavior : MonoBehaviour
 	private float mPreEnemySpawnTime = -1f; // 
     private Vector3 randomPosition;
 	public const float kEnemySpawnInterval = 3.0f; // in seconds
-    public bool frozen = true;
+    public bool frozen = false;
 
 
 	// spwaning enemy ...
@@ -35,7 +35,7 @@ public class GlobalBehavior : MonoBehaviour
     private int laserCount;
     public static int abductCount;
 
-    private bool toggleFrozen;
+    //private bool toggleFrozen;
 
 	// Use this for initialization
 	void Start () 
@@ -52,34 +52,35 @@ public class GlobalBehavior : MonoBehaviour
 			mEnemyToSpawn = Resources.Load("Prefabs/Enemy") as GameObject;
 		#endregion
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 5; i++)
         {
             randomPosition = new Vector3(Random.Range(mWorldMin.x, mWorldMax.x), Random.Range(mWorldMin.y, mWorldMax.y), 0.0f);
             GameObject e = Instantiate(mEnemyToSpawn, randomPosition, Quaternion.Euler(0, 0, Random.Range(0, 360))) as GameObject;
         }
 
         echoText.text = "";
-        toggleFrozen = false;
+        //toggleFrozen = false;
 	}
 
 	// Update is called once per frame
 	void Update () 
     {
+        /*
         if (!frozen)
         {
-            SpawnAnEnemy();
+            //SpawnAnEnemy();
         }
 
 		if (Input.GetAxis("Jump") > 0 && !toggleFrozen) 
         {
-            frozen = !frozen;
+            //frozen = !frozen;
             toggleFrozen = true;
 		}
         else if (Input.GetAxis("Jump") <= 0)
         {
             toggleFrozen = false;
         }
-        
+        */
         if (Input.GetAxis("Cancel") > 0)
         {
             Application.Quit();
