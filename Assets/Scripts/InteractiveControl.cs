@@ -27,10 +27,6 @@ public class InteractiveControl : MonoBehaviour
         {
             globalBehavior = FirstGameManager.TheGameState; ;
         }
-        if(mAudioEffect == null)
-        {
-            mAudioEffect = GetComponent<AudioSource>();
-        }
 	}
 	
 	// Update is called once per frame
@@ -57,8 +53,6 @@ public class InteractiveControl : MonoBehaviour
 				egg.SetForwardDirection(transform.up);
 			}
 
-            // Play shoot sound
-            mAudioEffect.Play();
 		}
 	}
 }

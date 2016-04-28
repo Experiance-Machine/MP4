@@ -17,7 +17,6 @@ public class Level1GameState : MonoBehaviour {
     public GameObject mEnemyToSpawn = null;
     #endregion
 
-    private int enemyCount;
     private int laserCount;
     public static int abductCount;
 
@@ -42,6 +41,11 @@ public class Level1GameState : MonoBehaviour {
         if ((Input.GetAxis("Cancel") > 0) || Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene("Menu");
+            GlobalBehavior.score = 0;
+        }
+        if (GameObject.Find("Enemy(Clone)") == null)
+        {
+            SceneManager.LoadScene("boss_scene");
         }
     }
 

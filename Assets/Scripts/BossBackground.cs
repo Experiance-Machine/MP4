@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossBackground : MonoBehaviour
 {
@@ -78,9 +79,10 @@ public class BossBackground : MonoBehaviour
             toggleFrozen = false;
         }
         */
-        if (Input.GetAxis("Cancel") > 0)
+        if ((Input.GetAxis("Cancel") > 0) || Input.GetKey(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadScene("Menu");
+            GlobalBehavior.score = 0;
         }
         //SetEchoText();
     }

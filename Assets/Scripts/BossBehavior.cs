@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BossBehavior : MonoBehaviour
 {
@@ -93,6 +94,8 @@ public class BossBehavior : MonoBehaviour
         }
         if (timesHit > 50) {
             Destroy(this.gameObject);
+            GlobalBehavior.score += 50;
+            SceneManager.LoadScene("Menu");
         }
     }
 }

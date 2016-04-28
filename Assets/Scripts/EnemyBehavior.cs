@@ -171,8 +171,8 @@ public class EnemyBehavior : MonoBehaviour
         stunCount++;
         if(stunCount > stunMax)
         {
-            Level1GameState.abductCount++;
             Destroy(gameObject);
+            GlobalBehavior.score++;
         }
     }
 	

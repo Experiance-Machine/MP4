@@ -19,6 +19,7 @@ public class GlobalBehavior : MonoBehaviour
 	#endregion
 
     public Text echoText;
+    public static int score;
 
     //private bool toggleFrozen;
 
@@ -33,9 +34,6 @@ public class GlobalBehavior : MonoBehaviour
 		UpdateWorldWindowBound();
 		#endregion
 
-
-
-
         echoText.text = "";
         //toggleFrozen = false;
 	}
@@ -48,7 +46,7 @@ public class GlobalBehavior : MonoBehaviour
 	
     public void SetEchoText()
     {
-        //Add score here
+        echoText.text = "Score: " + score;
     }
 
 	#region Game Window World size bound support
@@ -111,5 +109,10 @@ public class GlobalBehavior : MonoBehaviour
 		return status;
 		
 	}
-	#endregion 
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(0, 0, 150, 30), "Score: " + score);
+    }
+    #endregion
 }
