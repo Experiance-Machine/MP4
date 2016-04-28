@@ -29,6 +29,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private static GlobalBehavior globalBehavior;
     private GlobalBehavior.WorldBoundStatus status;
+    private Level1GameState level1GameState;
 
     private float stunTimer;
     private int stunCount;
@@ -38,9 +39,14 @@ public class EnemyBehavior : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+        if (level1GameState == null)
+        {
+            level1GameState = GameObject.Find("GameManager").GetComponent<Level1GameState>();
+        }
+
         if (globalBehavior == null)
         {
-            globalBehavior = GameObject.Find("GameManager").GetComponent<GlobalBehavior>();
+            globalBehavior = FirstGameManager.TheGameState;
         }
 
 		NewDirection();
@@ -165,7 +171,7 @@ public class EnemyBehavior : MonoBehaviour
         stunCount++;
         if(stunCount > stunMax)
         {
-            GlobalBehavior.abductCount++;
+            Level1GameState.abductCount++;
             Destroy(gameObject);
         }
     }

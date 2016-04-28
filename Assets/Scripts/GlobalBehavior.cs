@@ -12,34 +12,20 @@ public class GlobalBehavior : MonoBehaviour
 	
 	#region World Bound support
 	private Bounds mWorldBound;  // this is the world bound
-	private Vector2 mWorldMin;	// Better support 2D interactions
-	private Vector2 mWorldMax;
-	private Vector2 mWorldCenter;
+	public Vector2 mWorldMin;	// Better support 2D interactions
+	public Vector2 mWorldMax;
+	public Vector2 mWorldCenter;
 	private Camera mMainCamera;
 	#endregion
 
-	#region  support runtime enemy creation
-	// to support time ...
-	private float mPreEnemySpawnTime = -1f; // 
-    private Vector3 randomPosition;
-	public const float kEnemySpawnInterval = 3.0f; // in seconds
-    public bool frozen = false;
-
-
-	// spwaning enemy ...
-	public GameObject mEnemyToSpawn = null;
-	#endregion
-
     public Text echoText;
-    private int enemyCount;
-    private int laserCount;
-    public static int abductCount;
 
     //private bool toggleFrozen;
 
 	// Use this for initialization
 	void Start () 
     {
+        DontDestroyOnLoad(this);
 
 		#region world bound support
 		mMainCamera = Camera.main;
@@ -47,16 +33,8 @@ public class GlobalBehavior : MonoBehaviour
 		UpdateWorldWindowBound();
 		#endregion
 
-		#region initialize enemy spawning
-		if (null == mEnemyToSpawn) 
-			mEnemyToSpawn = Resources.Load("Prefabs/Enemy") as GameObject;
-		#endregion
 
-        for (int i = 0; i < 5; i++)
-        {
-            randomPosition = new Vector3(Random.Range(mWorldMin.x, mWorldMax.x), Random.Range(mWorldMin.y, mWorldMax.y), 0.0f);
-            GameObject e = Instantiate(mEnemyToSpawn, randomPosition, Quaternion.Euler(0, 0, Random.Range(0, 360))) as GameObject;
-        }
+
 
         echoText.text = "";
         //toggleFrozen = false;
@@ -65,35 +43,12 @@ public class GlobalBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        /*
-        if (!frozen)
-        {
-            //SpawnAnEnemy();
-        }
-
-		if (Input.GetAxis("Jump") > 0 && !toggleFrozen) 
-        {
-            //frozen = !frozen;
-            toggleFrozen = true;
-		}
-        else if (Input.GetAxis("Jump") <= 0)
-        {
-            toggleFrozen = false;
-        }
-        */
-        if (Input.GetAxis("Cancel") > 0)
-        {
-            Application.Quit();
-        }
-
         SetEchoText();
 	}
 	
-    void SetEchoText()
+    public void SetEchoText()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        laserCount = GameObject.FindGameObjectsWithTag("Laser").Length;
-        echoText.text = "Emoji: " + enemyCount + ", Lasers: " + laserCount + ", Abducted: " + abductCount;
+        //Add score here
     }
 
 	#region Game Window World size bound support
@@ -157,16 +112,4 @@ public class GlobalBehavior : MonoBehaviour
 		
 	}
 	#endregion 
-
-	#region enemy spawning support
-	private void SpawnAnEnemy()
-	{
-		if ((Time.realtimeSinceStartup - mPreEnemySpawnTime) > kEnemySpawnInterval) 
-        {
-            randomPosition = new Vector3(Random.Range(mWorldMin.x, mWorldMax.x), Random.Range(mWorldMin.y, mWorldMax.y), 0.0f);
-            GameObject e = Instantiate(mEnemyToSpawn, randomPosition, Quaternion.Euler(0, 0, Random.Range(0, 360))) as GameObject;
-			mPreEnemySpawnTime = Time.realtimeSinceStartup;
-		}
-	}
-	#endregion
 }

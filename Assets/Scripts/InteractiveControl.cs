@@ -25,7 +25,7 @@ public class InteractiveControl : MonoBehaviour
         }
         if (globalBehavior == null)
         {
-            globalBehavior = GameObject.Find("GameManager").GetComponent<GlobalBehavior>();
+            globalBehavior = FirstGameManager.TheGameState; ;
         }
 	}
 	
