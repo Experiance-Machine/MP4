@@ -25,8 +25,9 @@ public class BossBehavior : MonoBehaviour
     public float maxScare = 30f;
 
 
-    private static BossBackground globalBehavior;
-    private BossBackground.WorldBoundStatus status;
+    private static GlobalBehavior globalBehavior;
+    private GlobalBehavior.WorldBoundStatus status;
+    private BossBackground level2GameState;
 
     private float stunTimer;
     private int stunCount;
@@ -37,10 +38,18 @@ public class BossBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (level2GameState == null)
+        {
+            level2GameState = GameObject.Find("GameManager").GetComponent<BossBackground>();
+        }
+
         if (globalBehavior == null)
         {
-            globalBehavior = GameObject.Find("GameManager").GetComponent<BossBackground>();
+            globalBehavior = FirstGameManager.TheGameState;
         }
+
+        if (mAbduct == null)
+            mAbduct = Resources.Load("Prefabs/AbductSplash") as GameObject;
     }
 
     // Update is called once per frame
@@ -50,7 +59,7 @@ public class BossBehavior : MonoBehaviour
         transform.position += (200f * Time.smoothDeltaTime) * transform.up;
 
         status = globalBehavior.ObjectCollideWorldBound(GetComponent<Renderer>().bounds);
-         if (status != BossBackground.WorldBoundStatus.Inside)
+        if (status != GlobalBehavior.WorldBoundStatus.Inside)
          {
              NewDirection();
          }
@@ -86,13 +95,14 @@ public class BossBehavior : MonoBehaviour
         // Only care if hitting a Laser (vs. hitting another Enemy!
         if (other.gameObject.name == "Laser(Clone)")
         {
-           // worldPortalOffset = other.gameObject.transform.rotation * enemyPortalOffset;
-            //GameObject e = Instantiate(mAbduct, other.gameObject.transform.position + worldPortalOffset, other.gameObject.transform.rotation) as GameObject;
+            worldPortalOffset = other.gameObject.transform.rotation * enemyPortalOffset;
+            GameObject e = Instantiate(mAbduct, other.gameObject.transform.position + worldPortalOffset, other.gameObject.transform.rotation) as GameObject;
             Destroy(other.gameObject);
             timesHit++;
             Debug.Log("Hit" + timesHit);
         }
-        if (timesHit > 50) {
+        if (timesHit > 50) 
+        {
             Destroy(this.gameObject);
             GlobalBehavior.score += 50;
             SceneManager.LoadScene("Menu");

@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 public class BossBackground : MonoBehaviour
 {
 
+    GlobalBehavior globalBehavior = FirstGameManager.TheGameState;
+
     #region World Bound support
     private Bounds mWorldBound;  // this is the world bound
     private Vector2 mWorldMin;  // Better support 2D interactions
@@ -53,32 +55,9 @@ public class BossBackground : MonoBehaviour
         //echoText.text = "";
     }
 
-    /*void SetEchoText()
-    {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        laserCount = GameObject.FindGameObjectsWithTag("Laser").Length;
-        echoText.text = "Emoji: " + enemyCount + ", Lasers: " + laserCount + ", Abducted: " + abductCount;
-    }*/
-
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (!frozen)
-        {
-            //SpawnAnEnemy();
-        }
-
-		if (Input.GetAxis("Jump") > 0 && !toggleFrozen) 
-        {
-            //frozen = !frozen;
-            toggleFrozen = true;
-		}
-        else if (Input.GetAxis("Jump") <= 0)
-        {
-            toggleFrozen = false;
-        }
-        */
         if ((Input.GetAxis("Cancel") > 0) || Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene("Menu");
